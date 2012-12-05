@@ -10,7 +10,8 @@
 	},
 	"homepage": "https://github.com/ameba-proteus/proteus-validator",
 	"dependencies": {
-		"underscore": "*"
+		"underscore": "*",
+		"async": "*"
 	},
 	"devDependencies": {
 		"mocha": "*",

@@ -2,7 +2,8 @@
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
-	<script type="text/javascript" src="http://underscorejs.org/underscore.js"></script>
+	<script type="text/javascript" src="../node_modules/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="../node_modules/async/lib/async.js"></script>
 	<script type="text/javascript" src="../lib/validator.js"></script>
 	<script type="text/javascript">
 		<!--
@@ -31,8 +32,9 @@
 				}
 			}
 
-			var errors = validator.validateSchema(schema);
-			document.getElementById("content").innerHTML = errors.join('\n');
+			validator.validateSchema(schema, function(err) {
+				document.getElementById("content").innerHTML = JSON.stringify(err, null, ' ');
+			});
 		}
 		-->
 	</script>
