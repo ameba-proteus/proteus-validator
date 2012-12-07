@@ -1,0 +1,118 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "#",
+	"required":false,
+	"properties":{
+		"apiVersion": {
+			"type":"integer",
+			"id": "apiVersion",
+			"required":true,
+			"enum":[1, 2]
+		},
+		"data": {
+			"type":"object",
+			"id": "data",
+			"required":true,
+			"properties":{
+				"totalItems": {
+					"type":"integer",
+					"id": "totalItems",
+					"required":true,
+					"minimum":0
+				},
+				"itemsPerPage": {
+					"type":"integer",
+					"id": "itemsPerPage",
+					"required":true,
+					"minimum":1,
+					"maximum":10
+				},
+				"items": {
+					"type":"array",
+					"id": "items",
+					"required":true,
+					"minItems":0,
+					"maxItems":10,
+					"items": {
+						"type":"object",
+						"id": "0",
+						"required":false,
+						"properties":{
+							"id": {
+								"type":"string",
+								"id": "id",
+								"required":true,
+								"maxLength":10
+							},
+							"updated": {
+								"type":"string",
+								"id": "updated",
+								"required":true,
+								"format":"date-time"
+							},
+							"category": {
+								"type":"string",
+								"id": "category",
+								"required":true,
+								"enum":["News", "Movie", "Game", "Pet"]
+							},
+							"title": {
+								"type":"string",
+								"id": "title",
+								"required":true,
+								"maxLength":100
+							},
+							"description": {
+								"type":"string",
+								"id": "description",
+								"required":false,
+								"maxLength":10000
+							},
+							"tags": {
+								"type":"array",
+								"id": "tags",
+								"required":true,
+								"items": {
+										"type":"string",
+										"id": "0",
+										"required":false,
+										"maxLength":20
+								},
+								"maxItems": 3
+							},
+							"rating": {
+								"type":"number",
+								"id": "rating",
+								"required":true,
+								"minimum":0,
+								"maximum":5
+							},
+							"status": {
+								"type":"object",
+								"id": "status",
+								"required":true,
+								"properties":{
+									"value": {
+										"type":"string",
+										"id": "value",
+										"required":false,
+										"enum":["restricted", "rejected", "failed"]
+									},
+									"reason": {
+										"type":"string",
+										"id": "reason",
+										"required":false,
+										"maxLength":100
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+

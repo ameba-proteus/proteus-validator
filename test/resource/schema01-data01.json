@@ -1,0 +1,21 @@
+{
+    "apiVersion" : 2,
+    "data" : {
+        "totalItems" : 800,
+        "itemsPerPage" : 1,
+        "items" : [{
+            "id" : "abcde12345",
+            "updated" : "2012-01-02T03:04:05.123Z",
+            "category" : "News",
+            "title" : "proteus-validator introduction",
+            "description" : "proteus-validator is a JSON Schema validator. It can be used both client side and sever side.",
+            "tags" : ["json","validator","proteus"],
+            "rating" : 4.63,
+            "status" : {
+                "value" : "restricted",
+                "reason" : "limitedSyndication"
+            }
+        }]
+    }
+}
+

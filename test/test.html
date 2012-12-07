@@ -2,38 +2,190 @@
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
+	<style type="text/css">
+	body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+		padding: 0;
+		margin: 0;
+	}
+	div#content {
+		width: 720px;
+		margin: 10px;
+	}
+	div#control {
+		width: 700px;
+		float: left;
+	}
+	div#input {
+		width: 500px;
+		float: left;
+		padding-top: 10px;
+	}
+	textarea {
+		width: 500px;
+		height: 40em;
+		line-height: 1.5em;
+	}
+	div#output {
+		width: 200px;
+		float: right;
+		padding-top: 10px;
+	}
+	pre#errors {
+		width: 200px;
+	}
+	</style>
 	<script type="text/javascript" src="../node_modules/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="../node_modules/async/lib/async.js"></script>
 	<script type="text/javascript" src="../lib/validator.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script type="text/javascript">
 		<!--
-		function init(){
-			var schema = {
-				name : "test",
-				type : "object",
-				additionalProperties : false,
-				properties :
-				{
-					fullName                        : { type : "string", required : true },
-					age                             : { type : "integer", required : true },
-					optionalItem                    : { type : "string" },
-					state                           : { type : "string" },
-					city                            : { type : "string" },
-					zip                             : { type : "integer", required : true, format : "postal-code" },
-					married                         : { type : "boolean", required : true },
-					dozen                           : { type : "integer", required : true, minimum : 12, maximum : 12 },
-					dozenOrBakersDozen              : { type : "integer", required : true, minimum : 12, maximum : 13 },
-					favoriteEvenNumber              : { type : "integer", required : true, divisibleBy : 2 },
-					topThreeFavoriteColors          : { type : "array", required : true, minItems : 3, maxItems : 3, uniqueItems : true, items : { type : "string", format : "color" }},
-					favoriteSingleDigitWholeNumbers : { type : "array", required : true, minItems : 1, maxItems : 10, uniqueItems : true, items : { type : "integer", minimum : 0, maximum : 9 }},
-					favoriteFiveLetterWord          : { type : "string", required : true, minLength : 5, maxLength : 5 },
-					emailAddresses                  : { type : "array", required : true, minItems : 1, uniqueItems : true, items : { type : "string", format : "email" }},
-					ipAddresses                     : { type : "array", required : true, uniqueItems : true, items : { type : "string", format : "ip-address" }},
+		var schema = {
+			"type":"object",
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"id": "#",
+			"required":false,
+			"properties":{
+				"apiVersion": {
+					"type":"integer",
+					"id": "apiVersion",
+					"required":true,
+					"enum":[1, 2]
+				},
+				"data": {
+					"type":"object",
+					"id": "data",
+					"required":true,
+					"properties":{
+						"totalItems": {
+							"type":"integer",
+							"id": "totalItems",
+							"required":true,
+							"minimum":0
+						},
+						"itemsPerPage": {
+							"type":"integer",
+							"id": "itemsPerPage",
+							"required":true,
+							"minimum":1,
+							"maximum":10
+						},
+						"items": {
+							"type":"array",
+							"id": "items",
+							"required":true,
+							"minItems":0,
+							"maxItems":10,
+							"items": {
+								"type":"object",
+								"id": "0",
+								"required":false,
+								"properties":{
+									"id": {
+										"type":"string",
+										"id": "id",
+										"required":true,
+										"maxLength":10
+									},
+									"updated": {
+										"type":"string",
+										"id": "updated",
+										"required":true,
+										"format":"date-time"
+									},
+									"category": {
+										"type":"string",
+										"id": "category",
+										"required":true,
+										"enum":["News", "Movie", "Game", "Pet"]
+									},
+									"title": {
+										"type":"string",
+										"id": "title",
+										"required":true,
+										"maxLength":100
+									},
+									"description": {
+										"type":"string",
+										"id": "description",
+										"required":false,
+										"maxLength":10000
+									},
+									"tags": {
+										"type":"array",
+										"id": "tags",
+										"required":true,
+										"items": {
+												"type":"string",
+												"id": "0",
+												"required":false,
+												"maxLength":20
+										},
+										"maxItems": 3
+									},
+									"rating": {
+										"type":"number",
+										"id": "rating",
+										"required":true,
+										"minimum":0,
+										"maximum":5
+									},
+									"status": {
+										"type":"object",
+										"id": "status",
+										"required":true,
+										"properties":{
+											"value": {
+												"type":"string",
+												"id": "value",
+												"required":false,
+												"enum":["restricted", "rejected", "failed"]
+											},
+											"reason": {
+												"type":"string",
+												"id": "reason",
+												"required":false,
+												"maxLength":100
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
+		};
 
-			validator.validateSchema(schema, function(err) {
-				document.getElementById("content").innerHTML = JSON.stringify(err, null, ' ');
+		var initData = {
+			"apiVersion" : 2,
+			"data" : {
+				"totalItems" : 800,
+				"itemsPerPage" : 1,
+				"items" : [{
+					"id" : "abcde12345",
+					"updated" : "2012-01-02T03:04:05.123Z",
+					"category" : "News",
+					"title" : "proteus-validator introduction",
+					"description" : "proteus-validator is a JSON Schema validator.",
+					"tags" : ["json","validator","proteus"],
+					"rating" : 4.63,
+					"status" : {
+						"value" : "restricted",
+						"reason" : "limitedSyndication"
+					}
+				}]
+			}
+		};
+
+		function init() {
+			document.getElementById("data").value = JSON.stringify(initData, '\n', '  ');
+		}
+
+		function validate() {
+			var data = JSON.parse(document.getElementById("data").value);
+			validator.validate(schema, data, function(err) {
+				document.getElementById("errors").innerHTML = JSON.stringify(err, null, ' ');
 			});
 		}
 		-->
@@ -41,8 +193,20 @@
 	<title></title>
 </head>
 <body onload="init()">
-	error : 
-	<pre id="content"></pre>
+<div id="content">
+	<form>
+		<div id="control">
+			<input type="button" onclick="validate()" value="validate"/>
+			<input type="button" onclick="init()" value="reset"/>
+		</div>
+		<div id="input">
+			<textarea id="data"></textarea>
+		</div>
+	</form>
+	<div id="output">
+		<pre id="errors"></pre>
+	</div>
+</div>
 </body>
 </html>
 
