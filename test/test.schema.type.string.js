@@ -1,7 +1,6 @@
 
 var validator = require('../lib/validator');
 var should = require('should');
-var fs = require('fs');
 
 describe('validator', function() {
 	describe('#validateSchema', function() {
