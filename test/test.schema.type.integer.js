@@ -13,13 +13,15 @@ describe('validator', function() {
 				});
 			});
 			describe('with "minimum"', function() {
-				it('can validate', function() {
+				it('can validate if "minimum" value is positive integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						minimum: 4
 					}, function(errors) {
 						errors.should.be.empty;
 					});
+				});
+				it('can validate if "minimum" value is negative integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						minimum: -4
@@ -27,15 +29,13 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a number', function() {
+				it('will fail if "minimum" value is not an integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						minimum: '4'
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
-				});
-				it('fails if not an integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						minimum: 4.5
@@ -45,13 +45,15 @@ describe('validator', function() {
 				});
 			});
 			describe('with "maximum"', function() {
-				it('can validate', function() {
+				it('can validate if "maximum" value is positive integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						maximum: 4
 					}, function(errors) {
 						errors.should.be.empty;
 					});
+				});
+				it('can validate if "maximum" value is negative integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						maximum: -4
@@ -59,15 +61,13 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a integer', function() {
+				it('will fail if "maximum" value is not an integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						maximum: '4'
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
-				});
-				it('fails if not an integer', function() {
 					validator.validateSchema({
 						type: 'integer',
 						maximum: 4.5
@@ -93,7 +93,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a boolean', function() {
+				it('will fail if "exclusiveMinimum" value is not a boolean', function() {
 					validator.validateSchema({
 						type: 'integer',
 						minimum: 4,
@@ -102,7 +102,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('ignores validation if minimum is not defined', function() {
+				it('will ignore "exclusiveMinimum" value validation if minimum is not defined', function() {
 					validator.validateSchema({
 						type: 'integer',
 						exclusiveMinimum: 1
@@ -128,7 +128,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a boolean', function() {
+				it('will fail if "exclusiveMaximum" value is not a boolean', function() {
 					validator.validateSchema({
 						type: 'integer',
 						maximum: 4,
@@ -137,7 +137,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('ignores validation if maximum is not defined', function() {
+				it('will ignore "exclusiveMaximum" value validation if minimum is not defined', function() {
 					validator.validateSchema({
 						type: 'integer',
 						exclusiveMaximum: 1
@@ -163,15 +163,13 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a integer array', function() {
+				it('will fail if "enum" value is not an integer array', function() {
 					validator.validateSchema({
 						type: 'integer',
 						enum: ['enum1', 'enum2', 'enum3']
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
-				});
-				it('fails if not an array', function() {
 					validator.validateSchema({
 						type: 'integer',
 						enum: 1

@@ -22,27 +22,28 @@ describe('validator', function() {
 				errors.should.be.empty;
 			});
 		});
-		it('fails if undefined type', function() {
+		it('will fail if schema "type" is undefined', function() {
 			validator.validateSchema({
 				type: 'undefined'
 			}, function(errors) {
 				errors.should.not.be.empty;
 			});
 		});
-		it('fails if not an object', function() {
+		it('will fail if schema is not an object', function() {
 			validator.validateSchema('not an object', function(errors) {
 				errors.should.not.be.empty;
 			});
 		});
-
 		describe('with "required"', function() {
-			it('can validate', function() {
+			it('can validate if "required" value is true', function() {
 				validator.validateSchema({
 					type: 'string',
 					required: true
 				}, function(errors) {
 					errors.should.be.empty;
 				});
+			});
+			it('can validate if "required" value is false', function() {
 				validator.validateSchema({
 					type: 'string',
 					required: false
@@ -50,7 +51,7 @@ describe('validator', function() {
 					errors.should.be.empty;
 				});
 			});
-			it('fails if not a boolean', function() {
+			it('will fail if "required" value is not a boolean', function() {
 				validator.validateSchema({
 					type: 'string',
 					required: 'true'

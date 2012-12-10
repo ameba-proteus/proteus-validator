@@ -28,7 +28,7 @@ describe('validator', function() {
 		it('can unregist', function() {
 			validator.unregistSchema('schema02');
 		});
-		it('fails to validate if schema is unregistered', function() {
+		it('will fail to validate if schema is unregistered', function() {
 			validator.unregistSchema('schema02');
 			validator.validate('schema02', 1, function(errors) {
 				errors.should.not.be.empty;

@@ -13,13 +13,15 @@ describe('validator', function() {
 				});
 			});
 			describe('with "minimum"', function() {
-				it('can validate', function() {
+				it('can validate if "minimum" value is positive number', function() {
 					validator.validateSchema({
 						type: 'number',
 						minimum: 4.5
 					}, function(errors) {
 						errors.should.be.empty;
 					});
+				});
+				it('can validate if "minimum" value is negative number', function() {
 					validator.validateSchema({
 						type: 'number',
 						minimum: -4.5
@@ -27,23 +29,37 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a number', function() {
+				it('will fail if "minimum" value is not a number', function() {
 					validator.validateSchema({
 						type: 'number',
 						minimum: '4.5'
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
+					validator.validateSchema({
+						type: 'number',
+						minimum: null
+					}, function(errors) {
+						errors.should.not.be.empty;
+					});
+					validator.validateSchema({
+						type: 'number',
+						minimum: undefined
+					}, function(errors) {
+						errors.should.not.be.empty;
+					});
 				});
 			});
 			describe('with "maximum"', function() {
-				it('can validate', function() {
+				it('can validate if "maximum" value is positive number', function() {
 					validator.validateSchema({
 						type: 'number',
 						maximum: 4.5
 					}, function(errors) {
 						errors.should.be.empty;
 					});
+				});
+				it('can validate if "maximum" value is negative number', function() {
 					validator.validateSchema({
 						type: 'number',
 						maximum: -4.5
@@ -51,10 +67,22 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a number', function() {
+				it('will fail if "maximum" value is not a number', function() {
 					validator.validateSchema({
 						type: 'number',
 						maximum: '4.5'
+					}, function(errors) {
+						errors.should.not.be.empty;
+					});
+					validator.validateSchema({
+						type: 'number',
+						maximum: null
+					}, function(errors) {
+						errors.should.not.be.empty;
+					});
+					validator.validateSchema({
+						type: 'number',
+						maximum: undefined
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
@@ -77,7 +105,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a boolean', function() {
+				it('will fail if "exclusiveMinimum" value is not a boolean', function() {
 					validator.validateSchema({
 						type: 'number',
 						minimum: 4.5,
@@ -86,7 +114,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('ignores validation if minimum is not defined', function() {
+				it('will ignore "exclusiveMinimum" value validation if minimum is not defined', function() {
 					validator.validateSchema({
 						type: 'number',
 						exclusiveMinimum: 1
@@ -112,7 +140,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a boolean', function() {
+				it('will fail if "exclusiveMaximum" value is not a boolean', function() {
 					validator.validateSchema({
 						type: 'number',
 						maximum: 4.5,
@@ -121,7 +149,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('ignores validation if maximum is not defined', function() {
+				it('will ignore "exclusiveMaximum" value validation if maximum is not defined', function() {
 					validator.validateSchema({
 						type: 'number',
 						exclusiveMaximum: 1
@@ -147,15 +175,13 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a number array', function() {
+				it('will fail if "enum" value is not a number array', function() {
 					validator.validateSchema({
 						type: 'number',
 						enum: ['enum1', 'enum2', 'enum3']
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
-				});
-				it('fails if not an array', function() {
 					validator.validateSchema({
 						type: 'number',
 						enum: 1.1

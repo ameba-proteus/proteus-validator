@@ -21,15 +21,13 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a number', function() {
+				it('will fail if "minLength" value is not an integer', function() {
 					validator.validateSchema({
 						type: 'string',
 						minLength: '4'
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
-				});
-				it('fails if not an integer', function() {
 					validator.validateSchema({
 						type: 'string',
 						minLength: 4.5
@@ -37,7 +35,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if negative integer', function() {
+				it('will fail if "minLength" value is negative integer', function() {
 					validator.validateSchema({
 						type: 'string',
 						minLength: -4
@@ -55,15 +53,13 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a number', function() {
+				it('will fail if "maxLength" value is not an integer', function() {
 					validator.validateSchema({
 						type: 'string',
 						maxLength: '4'
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});
-				});
-				it('fails if not an integer', function() {
 					validator.validateSchema({
 						type: 'string',
 						maxLength: 4.5
@@ -71,7 +67,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if negative integer', function() {
+				it('will fail if "maxLength" value is negative integer', function() {
 					validator.validateSchema({
 						type: 'string',
 						maxLength: -4
@@ -89,7 +85,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a string', function() {
+				it('will fail if "pattern" value is not a string', function() {
 					validator.validateSchema({
 						type: 'string',
 						pattern: 1
@@ -97,7 +93,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if not valid pattern', function() {
+				it('will fail if "pattern" value is not valid pattern', function() {
 					validator.validateSchema({
 						type: 'string',
 						pattern: '^(invalid-pattern$'
@@ -129,7 +125,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a string', function() {
+				it('will fail if "format" value is not a string', function() {
 					validator.validateSchema({
 						type: 'string',
 						format: 1
@@ -137,7 +133,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if undefined format', function() {
+				it('will fail if "format" value is undefined format', function() {
 					validator.validateSchema({
 						type: 'string',
 						format: 'undefined-format'
@@ -163,7 +159,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a string array', function() {
+				it('will fail if "enum" value is not a string array', function() {
 					validator.validateSchema({
 						type: 'string',
 						enum: [1, 2, 3]
@@ -171,7 +167,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if not an array', function() {
+				it('will fail if "enum" value is not an array', function() {
 					validator.validateSchema({
 						type: 'string',
 						enum: 'enum1'

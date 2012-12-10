@@ -23,14 +23,14 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('can validate even if properties are not defined', function() {
+				it('can validate if "properties" are not defined', function() {
 					validator.validateSchema({
 						type: 'object'
 					}, function(errors) {
 						errors.should.be.empty;
 					});
 				});
-				it('can validate even if properties are blank', function() {
+				it('can validate if "properties" are blank', function() {
 					validator.validateSchema({
 						type: 'object',
 						properties: {}
@@ -38,7 +38,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if properties are null', function() {
+				it('will fail if "properties" are null', function() {
 					validator.validateSchema({
 						type: 'object',
 						properties: null
@@ -48,7 +48,7 @@ describe('validator', function() {
 				});
 			});
 			describe('with "additionalProperties"', function() {
-				it('can validate', function() {
+				it('can validate if "additionalProperties" are boolean', function() {
 					validator.validateSchema({
 						type: 'object',
 						properties: {
@@ -70,7 +70,26 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not a boolean', function() {
+				it('can validate if "additionalProperties" are schema object', function() {
+					validator.validateSchema({
+						type: 'object',
+						properties: {
+							prop1: { type: 'string' },
+							prop2: { type: 'string' }
+						},
+						additionalProperties: {
+							type: 'object',
+							properties: {
+								subprop1: {
+									type: 'string'
+								}
+							}
+						}
+					}, function(errors) {
+						errors.should.be.empty;
+					});
+				});
+				it('will fail if "additionalProperties" value is not a boolean', function() {
 					validator.validateSchema({
 						type: 'object',
 						properties: {
@@ -78,6 +97,20 @@ describe('validator', function() {
 							prop2: { type: 'string' }
 						},
 						additionalProperties: 'true'
+					}, function(errors) {
+						errors.should.not.be.empty;
+					});
+				});
+				it('will fail if "additionalProperties" value is not schema object', function() {
+					validator.validateSchema({
+						type: 'object',
+						properties: {
+							prop1: { type: 'string' },
+							prop2: { type: 'string' }
+						},
+						additionalProperties: {
+							prop1: 'value'
+						}
 					}, function(errors) {
 						errors.should.not.be.empty;
 					});

@@ -21,7 +21,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not an integer', function() {
+				it('will fail if "minItems" value is not an integer value', function() {
 					validator.validateSchema({
 						type: 'array',
 						minItems: '1'
@@ -29,7 +29,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if a number with digits', function() {
+				it('will fail if "minItems" value is a number with digits', function() {
 					validator.validateSchema({
 						type: 'array',
 						minItems: 1.5
@@ -37,7 +37,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if negative integer', function() {
+				it('will fail if "minItems" value is negative integer', function() {
 					validator.validateSchema({
 						type: 'array',
 						minItems: -1
@@ -55,7 +55,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not an integer', function() {
+				it('will fail if "maxItems" value is not an integer value', function() {
 					validator.validateSchema({
 						type: 'array',
 						maxItems: '1'
@@ -63,7 +63,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if a number with digits', function() {
+				it('will fail if "maxItems" value is a number with digits', function() {
 					validator.validateSchema({
 						type: 'array',
 						maxItems: 1.5
@@ -71,7 +71,7 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
-				it('fails if negative integer', function() {
+				it('will fail if "maxItems" value is negative integer', function() {
 					validator.validateSchema({
 						type: 'array',
 						maxItems: -1
@@ -84,14 +84,8 @@ describe('validator', function() {
 				it('can validate', function() {
 					validator.validateSchema({
 						type: 'array',
-						items: { type: 'string'}
-					}, function(errors) {
-						errors.should.be.empty;
-					});
-					validator.validateSchema({
-						type: 'array',
 						items: [
-							{ type: 'string'},
+							{ type: 'string' },
 							{ type: 'number' },
 							{ type: 'integer' },
 							{ type: 'boolean' },
@@ -103,7 +97,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('can validate even if items are blank', function() {
+				it('can validate even if "items" value is empty array', function() {
 					validator.validateSchema({
 						type: 'array',
 						items: []
@@ -111,7 +105,7 @@ describe('validator', function() {
 						errors.should.be.empty;
 					});
 				});
-				it('fails if not an object or an array', function() {
+				it('will fail if "items" value is not an object or an array', function() {
 					validator.validateSchema({
 						type: 'array',
 						items: 'items'

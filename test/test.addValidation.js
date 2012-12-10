@@ -41,5 +41,9 @@ describe('validator', function() {
 				errors.should.be.empty;
 			});
 		});
+		it('will fail if custom validation is not function', function() {
+			validator.addValidation('errorIfContains', null).should.be.false;
+		});
+
 	});
 });
