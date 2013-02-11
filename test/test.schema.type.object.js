@@ -116,6 +116,54 @@ describe('validator', function() {
 					});
 				});
 			});
+			describe('with oneOf', function() {
+				it('can validate with oneOf', function() {
+					validator.validateSchema({
+						type: 'object',
+						oneOf: [{
+							type: 'object',
+							properties: {
+								prop1: { type: 'string' }
+							}
+						},{
+							type: 'object',
+							properties: {
+								prop2: { type: 'string' }
+							}
+						}]
+					}, function(errors) {
+						errors.should.be.empty;
+					});
+				});
+				it('will fail if oneOf is not array', function() {
+					validator.validateSchema({
+						type: 'object',
+						oneOf: {
+							type: 'object',
+							properties: {
+								prop2: { type: 'string' }
+							}
+						}
+					}, function(errors) {
+						errors.should.not.be.empty;
+					});
+				});
+				it('will fail if oneOf has non object schema', function() {
+					validator.validateSchema({
+						type: 'object',
+						oneOf: [{
+							type: 'invalid'
+						}, {
+							type: 'object',
+							properties: {
+								prop1: { type: 'string' }
+							}
+						}]
+					}, function(errors) {
+						errors.should.not.be.empty;
+					});
+				});
+			});
 		});
 	});
 });
