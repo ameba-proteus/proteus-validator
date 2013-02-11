@@ -3,16 +3,16 @@ var validator = require('../lib/validator');
 var should = require('should');
 
 describe('validator', function() {
-	describe('#registSchema', function() {
+	describe('#registerSchema', function() {
 		it('can regist asynchronously', function() {
-			validator.registSchema('schema01', {
+			validator.registerSchema('schema01', {
 				type: 'string'
 			}, function(errors) {
 				errors.should.be.empty;
 			});
 		});
 		it('can regist synchronously', function() {
-			var errors = validator.registSchema('schema02', { type: 'integer'});
+			var errors = validator.registerSchema('schema02', { type: 'integer'});
 			errors.should.be.empty;
 		});
 		it('can validate by registered schema successfully', function() {
@@ -24,12 +24,12 @@ describe('validator', function() {
 			});
 		});
 	});
-	describe('#unregistSchema', function() {
+	describe('#unregisterSchema', function() {
 		it('can unregist', function() {
-			validator.unregistSchema('schema02');
+			validator.unregisterSchema('schema02');
 		});
 		it('will fail to validate if schema is unregistered', function() {
-			validator.unregistSchema('schema02');
+			validator.unregisterSchema('schema02');
 			validator.validate('schema02', 1, function(errors) {
 				errors.should.not.be.empty;
 			});
