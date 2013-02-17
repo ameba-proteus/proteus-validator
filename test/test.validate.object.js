@@ -111,6 +111,31 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
+				it('can validate string style schema', function() {
+					validator.validate({
+						type: 'object',
+						properties: {
+							prop1: 'integer',
+							prop2: 'number',
+							prop3: 'string'
+						}
+					}, { prop1: 10, prop2: 50.5, prop3: 'text-value' }, function(errors) {
+						errors.should.be.empty;
+					});
+				});
+				it('will fail string style schema', function() {
+					validator.validate({
+						type: 'object',
+						properties: {
+							prop1: 'integer',
+							prop2: 'number',
+							prop3: 'string'
+						}
+					}, { prop1: 'error', prop2: 50, prop3: 'text-value' }, function(errors) {
+						errors.should.not.be.empty;
+						errors.length.should.be.equal(1);
+					});
+				});
 			});
 			describe('with "oneOf"', function() {
 				it('can validate oneOf', function() {

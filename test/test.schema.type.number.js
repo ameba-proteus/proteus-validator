@@ -12,6 +12,11 @@ describe('validator', function() {
 					errors.should.be.empty;
 				});
 			});
+			it('can validate string type', function() {
+				validator.validateSchema('number', function(errors) {
+					errors.should.be.empty;
+				});
+			});
 			describe('with "minimum"', function() {
 				it('can validate if "minimum" value is positive number', function() {
 					validator.validateSchema({

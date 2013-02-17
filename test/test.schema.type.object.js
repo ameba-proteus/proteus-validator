@@ -46,6 +46,18 @@ describe('validator', function() {
 						errors.should.not.be.empty;
 					});
 				});
+				it('can validate string style schemas', function() {
+					validator.validateSchema({
+						type: 'object',
+						properties: {
+							prop1: 'integer',
+							prop2: 'number',
+							prop3: 'string'
+						}
+					}, function(errors) {
+						errors.should.be.empty;
+					});
+				});
 			});
 			describe('with "additionalProperties"', function() {
 				it('can validate if "additionalProperties" are boolean', function() {
